@@ -2,9 +2,9 @@
 name = "flask_encrypted_cookies_session"
 version = "0.0.0" # Managed by poetry-dynamic-versioning
 description = "An encrypted cookie based session implementation for flask"
-authors = ["Rémi Ferrand <riton.github@gmail.com>"]
+authors = ["Rémi Ferrand <remi.ferrand@cc.in2p3.fr>"]
 license = "CECILL-B"
-homepage = "https://gitlab.com/riton/flask-encrypted-cookies-session"
+homepage = "https://gitlab.in2p3.fr/rferrand/flask-encrypted-cookies-session"
 
 [tool.poetry.dependencies]
 python = "^3.9"
