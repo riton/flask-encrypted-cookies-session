@@ -39,7 +39,6 @@ class FernetJSONSerializer(SerializerInterface):
 
     def __init__(self, encryption_key: FernetType) -> None:
         self._encryption_key = encryption_key
-        print(type(encryption_key))
 
     def dumps(self, obj: Any) -> Union[str, bytes]:
         data = json.dumps(obj).encode("utf-8")
