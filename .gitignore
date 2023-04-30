@@ -1,0 +1,11 @@
+/dist/
+/setup.py
+/*.rpm
+/*.egg-info
+/build/
+/.coverage
+/coverage.xml
+/coverage.log
+/report.xml
+/.tox/
+__pycache__/
