@@ -30,9 +30,60 @@
 # The fact that you are presently reading this means that you have had
 # knowledge of the CeCILL license and that you accept its terms.
 #
-from flask_encrypted_cookies_session import cli
+from __future__ import annotations
+
+from http import HTTPStatus
+
+from cryptography.fernet import Fernet
+from flask import Flask, session
+
+from flask_encrypted_cookies_session import EncryptedCookieSession
 
 
-def test_cli_rc() -> None:
-    return_code = cli.main()
-    assert return_code == 0
+def create_app(encryption_keys: bytes) -> Flask:
+    app = Flask(__name__)
+    app.config.update(
+        {
+            "SECRET_KEY": "fooooooo",
+            "ENCRYPTED_COOKIES_SECRET_KEY": encryption_keys,
+            "TESTING": True,
+        }
+    )
+    EncryptedCookieSession(app)
+
+    @app.route("/set/")
+    def session_set():
+        session["key"] = "value"
+        return "ok"
+
+    @app.route("/get/")
+    def session_get():
+        return session.get("key", "not set")
+
+    return app
+
+
+def test_single_key() -> None:
+    app = create_app(Fernet.generate_key())
+    _test_with_app(app)
+
+
+def test_multi_keys() -> None:
+    app = create_app(b",".join([Fernet.generate_key(), Fernet.generate_key()]))
+    _test_with_app(app)
+
+
+def _test_with_app(app: Flask) -> None:
+    t_client = app.test_client()
+
+    response = t_client.get("/get/")
+    assert response.status_code == HTTPStatus.OK
+    assert response.data == b"not set"
+
+    response = t_client.get("/set/")
+    assert response.status_code == HTTPStatus.OK
+    assert response.data == b"ok"
+
+    response = t_client.get("/get/")
+    assert response.status_code == HTTPStatus.OK
+    assert response.data == b"value"
