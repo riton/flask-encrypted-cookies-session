@@ -1,7 +1,7 @@
 #
 
-[![pipeline status](https://gitlab.com/riton/flask-fernet-cookies-session/badges/develop/pipeline.svg)](https://gitlab.com/riton/flask-fernet-cookies-session/-/commits/develop)
-[![coverage report](https://gitlab.com/riton/flask-fernet-cookies-session/badges/develop/coverage.svg)](https://gitlab.com/riton/flask-fernet-cookies-session/-/commits/develop)
+[![pipeline status](https://gitlab.in2p3.fr/rferrand/flask-fernet-cookies-session/badges/develop/pipeline.svg)](https://gitlab.in2p3.fr/rferrand/flask-fernet-cookies-session/-/commits/develop)
+[![coverage report](https://gitlab.in2p3.fr/rferrand/flask-fernet-cookies-session/badges/develop/coverage.svg)](https://gitlab.in2p3.fr/rferrand/flask-fernet-cookies-session/-/commits/develop)
 [![black badge](https://img.shields.io/badge/code%20style-black-000000.svg)](https://img.shields.io/badge/code%20style-black-000000.svg)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 
@@ -17,6 +17,13 @@ _Example_ : Use cookies to store OAuth2 _access tokens_ without the burden of se
 
 
 ## Usage
+
+### Installation
+
+`pip install flask-encrypted-cookies-session`
+
+
+### Flask application configuration
 
 Private key used to encrypt cookies can be generated with `python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key())"`
 
@@ -78,16 +85,8 @@ $ poe test
 $ poe test-py39
 ```
 
-### F.A.Q
+## F.A.Q
 
-#### Should I commit the `poetry.lock` file ?
+### Where can I open an _Issue_ or a _Pull Request_ to contribute ?
 
-**Yes**. This file is used to _lock your project dependencies version_.
-
-This is a very important file to ensure _reproducible executions_.
-
-#### Was this project generated from a template ?
-
-**Yes**. This project was generated using @rferrand [`copier-python-project-skeleton`](https://gitlab.in2p3.fr/rferrand/copier-python-project-skeleton).
-
-[![copier-python-project-skeleton](https://gitlab.in2p3.fr/uploads/-/system/project/avatar/16610/python_copier.png?width=48)](https://gitlab.in2p3.fr/rferrand/copier-python-project-skeleton)
+The [github repository](https://github.com/riton/flask-encrypted-cookies-session) should be used for _Issues_ or _contributions_.
