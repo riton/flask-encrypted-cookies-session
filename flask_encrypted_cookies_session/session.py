@@ -38,6 +38,7 @@ class FernetJSONSerializer(SerializerInterface):
 
     def __init__(self, encryption_key: FernetType) -> None:
         self._encryption_key = encryption_key
+        print(type(encryption_key))
 
     def dumps(self, obj: Any) -> Union[str, bytes]:
         data = json.dumps(obj).encode("utf-8")
@@ -68,6 +69,17 @@ class EncryptedCookieSessionInterface(SecureCookieSessionInterface):
 
 
 class EncryptedCookieSession:
+    """
+    An encrypted cookie based session implementation that relies on Fernet (128-bit AES in CBC mode + HMAC SHA-256)
+    Private key must be provided in application configuration using the 'ENCRYPTED_COOKIES_SECRET_KEY' attribute.
+
+    If you'd like to rotate your keys (and you should), just provide two private keys separated by ',' in the
+    'ENCRYPTED_COOKIES_SECRET_KEY' configuration attribute.
+
+    To generate a private key, just use `python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key())"`
+    and keep it secret.
+    """
+
     def __init__(self, app: Optional[Flask]) -> None:
         self.app = app
         if app is not None:
