@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+from functools import cached_property
 from typing import TYPE_CHECKING
 
 from cryptography.fernet import Fernet, MultiFernet
@@ -85,18 +86,25 @@ class EncryptedCookieSession:
         if app is not None:
             self.init_app(app)
 
-    def init_app(self, app: Flask) -> None:
-        secret_keys: bytes = app.config["ENCRYPTED_COOKIES_SECRET_KEY"].encode("utf-8")
+    @cached_property
+    def _secret_keys(self) -> bytes:
+        assert self.app is not None
+        assert "ENCRYPTED_COOKIES_SECRET_KEY" in self.app.config
 
+        if isinstance(self.app.config["ENCRYPTED_COOKIES_SECRET_KEY"], str):
+            return self.app.config["ENCRYPTED_COOKIES_SECRET_KEY"].encode("utf-8")
+        return self.app.config["ENCRYPTED_COOKIES_SECRET_KEY"]
+
+    def init_app(self, app: Flask) -> None:
         encryption_key: FernetType
-        if FERNET_KEYS_SEPARATOR in secret_keys:
-            keys = secret_keys.split(FERNET_KEYS_SEPARATOR, 1)
+        if FERNET_KEYS_SEPARATOR in self._secret_keys:
+            keys = self._secret_keys.split(FERNET_KEYS_SEPARATOR, 1)
             encryption_keys: list[Fernet] = []
             for key in keys:
                 encryption_keys.append(Fernet(key))
             encryption_key = MultiFernet(encryption_keys)
         else:
-            encryption_key = Fernet(secret_keys)
+            encryption_key = Fernet(self._secret_keys)
 
         app.session_interface = EncryptedCookieSessionInterface(
             encryption_key=encryption_key
