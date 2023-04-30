@@ -18,6 +18,13 @@ _Example_ : Use cookies to store OAuth2 _access tokens_ without the burden of se
 
 ## Usage
 
+### Installation
+
+`pip install flask-encrypted-cookies-session`
+
+
+### Flask application configuration
+
 Private key used to encrypt cookies can be generated with `python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key())"`
 
 ```python
@@ -78,10 +85,8 @@ $ poe test
 $ poe test-py39
 ```
 
-### F.A.Q
+## F.A.Q
 
-#### Should I commit the `poetry.lock` file ?
+### Where can I open an _Issue_ or a _Pull Request_ to contribute ?
 
-**Yes**. This file is used to _lock your project dependencies version_.
-
-This is a very important file to ensure _reproducible executions_.
+The [github repository](https://github.com/riton/flask-encrypted-cookies-session) should be used for _Issues_ or _contributions_.
