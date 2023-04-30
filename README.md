@@ -85,9 +85,3 @@ $ poe test-py39
 **Yes**. This file is used to _lock your project dependencies version_.
 
 This is a very important file to ensure _reproducible executions_.
-
-#### Was this project generated from a template ?
-
-**Yes**. This project was generated using @rferrand [`copier-python-project-skeleton`](https://gitlab.in2p3.fr/rferrand/copier-python-project-skeleton).
-
-[![copier-python-project-skeleton](https://gitlab.in2p3.fr/uploads/-/system/project/avatar/16610/python_copier.png?width=48)](https://gitlab.in2p3.fr/rferrand/copier-python-project-skeleton)
