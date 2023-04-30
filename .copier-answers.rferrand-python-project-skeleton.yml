@@ -1,0 +1,27 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: v0.20.0
+_src_path: /home/riton/Sources/copier-python-project-skeleton
+author_email: riton.github@gmail.com
+author_name: Rémi Ferrand
+build_isolated_virtualenv_rpm_package: false
+build_library_rpm_package: false
+copyright_year: 2023
+deploy_rpms_to_pulp: false
+deploy_to_private_pypi: true
+has_cli: false
+isolated_virtualenv_python_version: '3.9'
+isolated_virtualenv_root_dir: /opt/ccin2p3/flask_encrypted_cookies_session
+isolated_virtualenv_rpm_package_name: flask_encrypted_cookies_session
+module_name: flask_encrypted_cookies_session
+program_install_dir: /usr/bin
+program_name: flask_encrypted_cookies_session
+project_default_git_branch: develop
+project_description: An encrypted cookie based session implementation for flask
+project_url: https://gitlab.com/riton/flask-fernet-cookies-session
+pulp_repository_name: cc
+pulp_repository_versions: 7,8,9
+python_version: '3.9'
+supported_python_versions: py39,py310,py311
+use_gitlab_issue_template: true
+use_precommit: true
+use_renovatebot: false

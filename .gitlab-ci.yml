@@ -1,0 +1,116 @@
+---
+stages:
+  - testing
+  - building
+  - publishing
+
+image:
+  name: 'gitlab-registry.in2p3.fr/cc-in2p3/containers/python/3.9:rockylinux8'
+  entrypoint: [""]
+
+cache: &global_cache
+  key: '$CI_COMMIT_SHA'
+  paths:
+    - '.cache'
+  policy: 'pull-push'
+
+variables:
+  POETRY_CACHE_DIR: '$CI_PROJECT_DIR/.cache/pypoetry'
+
+before_script:
+  - dnf install -y git
+  - pip3.9 install poetry
+  - poetry self add "poetry-dynamic-versioning[plugin]"
+  - poetry config http-basic.pypi_cc_in2p3_fr gitlab-ci-token "$CI_JOB_TOKEN"
+  - 'echo -e "machine gitlab.in2p3.fr\n  login gitlab-ci-token\n  password $CI_JOB_TOKEN\n" > ~/.netrc'
+  - poetry install
+
+code_style_enforce:
+  stage: testing
+  script:
+    - poetry run poe code-format-check
+    - poetry run poe code-imports-format-check
+    - poetry run poe lint
+
+unittest:
+  stage: testing
+  coverage: '/(?i)total.*? (100(?:\.0+)?\%|[1-9]?\d(?:\.\d+)?\%)$/'
+  script:
+    - dnf install -y python39 python310 python311
+    - poetry run poe test
+    - cat coverage.log
+  artifacts:
+    when: always
+    paths:
+      - 'coverage.xml'
+    reports:
+      coverage_report:
+        coverage_format: 'cobertura'
+        path: 'coverage.xml'
+      junit: 'report.xml'
+
+pyright:
+  stage: testing
+  image:
+    name: 'gitlab-registry.in2p3.fr/cc-in2p3/containers/pyright:latest'
+    entrypoint: [""]
+  allow_failure: true
+  script:
+    - poetry run poe pyright
+
+build:
+  stage: building
+  allow_failure: false
+  script:
+    - poetry build
+  artifacts:
+    expire_in: '1 hour'
+    paths:
+      - 'dist/*.tar.gz'
+      - 'dist/*.whl'
+  cache:
+    <<: *global_cache
+    policy: 'pull'
+#
+# Publish package to private PyPi
+#
+# If this is a release, package will
+# go to the "central pypi" registry
+# at https://gitlab.in2p3.fr/cc-in2p3/python-package-registry
+#
+# If this is a development version,
+# package will go to the "local project pypi"
+# registry only
+#
+# The difference between a release and a development
+# version is either a tag was used or not.
+#
+release-publish:
+  stage: publishing
+  dependencies:
+    - build
+  allow_failure: false
+  script:
+    - poetry publish --repository pypi_cc_in2p3_fr
+  only:
+    - '/^v\d/'
+  except:
+    - 'branches'
+  cache:
+    <<: *global_cache
+    policy: 'pull'
+
+development-publish:
+  stage: publishing
+  dependencies:
+    - build
+  allow_failure: false
+  script:
+    - poetry config repositories.local_project_pypi ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/pypi
+    - poetry config http-basic.local_project_pypi gitlab-ci-token "$CI_JOB_TOKEN"
+    - poetry publish --repository local_project_pypi
+  except:
+    - 'tags'
+  cache:
+    <<: *global_cache
+    policy: 'pull'
