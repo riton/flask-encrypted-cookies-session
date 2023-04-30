@@ -1,7 +1,7 @@
 #
 
-[![pipeline status](https://gitlab.in2p3.fr/rferrand/flask-fernet-cookies-session/badges/develop/pipeline.svg)](https://gitlab.in2p3.fr/rferrand/flask-fernet-cookies-session/-/commits/develop)
-[![coverage report](https://gitlab.in2p3.fr/rferrand/flask-fernet-cookies-session/badges/develop/coverage.svg)](https://gitlab.in2p3.fr/rferrand/flask-fernet-cookies-session/-/commits/develop)
+[![pipeline status](https://gitlab.in2p3.fr/rferrand/flask-encrypted-cookies-session/badges/develop/pipeline.svg)](https://gitlab.in2p3.fr/rferrand/flask-encrypted-cookies-session/-/commits/develop)
+[![coverage report](https://gitlab.in2p3.fr/rferrand/flask-encrypted-cookies-session/badges/develop/coverage.svg)](https://gitlab.in2p3.fr/rferrand/flask-encrypted-cookies-session/-/commits/develop)
 [![black badge](https://img.shields.io/badge/code%20style-black-000000.svg)](https://img.shields.io/badge/code%20style-black-000000.svg)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 
