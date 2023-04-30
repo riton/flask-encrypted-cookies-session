@@ -8,6 +8,8 @@ homepage = "https://gitlab.in2p3.fr/rferrand/flask-encrypted-cookies-session"
 
 [tool.poetry.dependencies]
 python = "^3.9"
+cryptography = "^40.0.2"
+flask = "^2.3.1"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.1.3"

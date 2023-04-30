@@ -87,7 +87,11 @@ disable=raw-checker-failed,
         deprecated-pragma,
         use-symbolic-message-instead,
         missing-module-docstring,
-        missing-function-docstring
+        missing-function-docstring,
+        too-few-public-methods,
+        missing-class-docstring,
+        line-too-long
+
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option
@@ -566,5 +570,5 @@ min-public-methods=2
 
 # Exceptions that will emit a warning when being caught. Defaults to
 # "BaseException, Exception".
-overgeneral-exceptions=BaseException,
-                       Exception
+overgeneral-exceptions=builtins.BaseException,
+                       builtins.Exception
